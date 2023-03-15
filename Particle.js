@@ -4,16 +4,22 @@ class Particle {
     this.rays = [];
     this.xoff = random(100);
     this.yoff = random(100);
-    let rays = 1500;
+    let rays = 900;
     for (let a = 0; a < 359.9; a += 360 / rays) {
       this.rays.push(new Ray(this.pos, radians(a)));
     }
   }
 
-  update(x, y) {
-    this.pos.set(x, y);
-    this.xoff += 0.001;
-    this.yoff += 0.001;
+  update(mouse) {
+    if (!mouse) {
+      this.xoff += 0.005;
+      this.yoff += 0.005;
+      let x = noise(this.xoff) * width;
+      let y = noise(this.yoff) * height;
+      this.pos.set(x, y);
+    } else {
+      this.pos.set(mouseX, mouseY);
+    }
   }
 
   look(walls) {
@@ -33,10 +39,12 @@ class Particle {
       }
 
       if (closest) {
-        let r = noise(this.xoff) * 255;
-        let g = noise(this.yoff) * 255;
-        stroke(r, g, 100, 127);
-        strokeWeight(0.1);
+        stroke(255, 0, 0, 10);
+        stroke(255, 100);
+        stroke(255, 51, 71, 100);
+        // stroke(0, 100);
+        // stroke(235, 1, 110, 100);
+        strokeWeight(0.4);
         line(this.pos.x, this.pos.y, closest.x, closest.y);
       }
     }

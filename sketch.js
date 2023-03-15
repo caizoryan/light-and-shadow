@@ -2,46 +2,58 @@
 // https://youtu.be/TOEi6T2mtHo
 
 let walls = [];
-let particle, particle2;
-let xoff = 0;
-let yoff = 02;
+let particles = [];
+let mouse;
+let font;
+let points;
 
+function preload() {
+  font = loadFont("./Poppins-Regular.ttf");
+}
 function setup() {
   createCanvas(windowWidth, windowHeight);
+  points = font.textToPoints("INTERACTION LAB", 200, 250, 100);
 
   walls.push(new Boundary(0, 0, width, 0));
   walls.push(new Boundary(width, 0, width, height));
   walls.push(new Boundary(width, height, 0, height));
   walls.push(new Boundary(0, height, 0, 0));
 
-  for (let i = 0; i < 10; i++) {
-    let x1 = random(width);
-    let y1 = random(height);
-    let x2 = random(width);
-    let y2 = random(height);
-    wall = new Boundary(x1, y1, x2, y2);
+  for (let i = 0; i < points.length; i++) {
+    if (i + 2 > points.length) break;
+    console.log(points);
+    let p1 = points[i];
+    let p2 = points[i + 1];
+    let wall = new Boundary(p1.x, p1.y, p2.x, p2.y);
     walls.push(wall);
   }
 
-  particle = new Particle(random(100));
-  particle2 = new Particle(random(100));
+  // for (let i = 0; i < 10; i++) {
+  //   // use points from poppins to make a letter here
+  //   let x1 = random(width);
+  //   let y1 = random(height);
+  //   let x2 = random(width);
+  //   let y2 = random(height);
+  //   let wall = new Boundary(x1, y1, x2, y2);
+  //   walls.push(wall);
+  // }
+
+  for (let i = 0; i < 2; i++) {
+    particles.push(new Particle());
+  }
+  mouse = new Particle();
 }
 
 function draw() {
-  xoff += 0.007;
-  yoff += 0.007;
-  let xx = noise(xoff) * width;
-  let yy = noise(yoff) * height;
-  let xxx = noise(xoff + 100) * width;
-  let yyy = noise(yoff + 11) * height;
-  background(0, 06);
-  particle2.show();
-  particle2.look(walls);
-  particle2.update(xx, yy);
-  particle.update(xxx, yyy);
-  particle.show();
-  particle.look(walls);
-
+  background(0, 07);
+  for (const particle of particles) {
+    particle.show();
+    particle.look(walls);
+    particle.update(false);
+  }
+  // mouse.show();
+  // mouse.look(walls);
+  // mouse.update(true);
   for (let wall of walls) {
     wall.show();
   }

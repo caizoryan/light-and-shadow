@@ -12,7 +12,7 @@ function preload() {
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  points = font.textToPoints("INTERACTION LAB", 200, 250, 100);
+  points = font.textToPoints("INTERACTION LAB", 400, height - 400, 170);
 
   walls.push(new Boundary(0, 0, width, 0));
   walls.push(new Boundary(width, 0, width, height));
@@ -38,22 +38,22 @@ function setup() {
   //   walls.push(wall);
   // }
 
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 1; i++) {
     particles.push(new Particle());
   }
   mouse = new Particle();
 }
 
 function draw() {
-  background(0, 07);
-  for (const particle of particles) {
-    particle.show();
-    particle.look(walls);
-    particle.update(false);
-  }
-  // mouse.show();
-  // mouse.look(walls);
-  // mouse.update(true);
+  background(0, 05);
+  // for (const particle of particles) {
+  //   particle.show();
+  //   particle.look(walls);
+  //   particle.update(false);
+  // }
+  mouse.show();
+  mouse.look(walls);
+  mouse.update(true);
   for (let wall of walls) {
     wall.show();
   }
